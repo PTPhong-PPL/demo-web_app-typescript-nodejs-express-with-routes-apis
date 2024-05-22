@@ -29,7 +29,10 @@ export async function validateDBUidPhone(req: Request, res: Response, next: Next
     if (!result.isEmpty()) {
         return res.status(400).send({ error: result.array() });
     }
-    req.body = matchedData(req);
+
+    Object.assign(req.body, matchedData(req)); /* Lấy dữ liệu mới đã được validated ghi đè lên dữ liệu cũ trong request body. Mọi dữ
+                                                liệu không liên quan/không validate vẫn giữ nguyên trong request body */
+
     next();
     
 };

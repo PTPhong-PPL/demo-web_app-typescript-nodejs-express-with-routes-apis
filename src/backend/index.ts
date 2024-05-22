@@ -13,8 +13,8 @@ const app = express();
 
 app.use(express.json()); // So express can work with POST json
 
-// app.use(loggingmd); // Only use when you want to use this mw globally, mean it will run everytime
-                       // if you want to use it for specific routes -> ex: app.get('/...', middleware, (req, res) => { ... };
+/* app.use(loggingmd);  // Only use when you want to use this mw globally, mean it will run everytime
+                        // if you want to use it for specific routes -> ex: app.get('/...', middleware, (req, res) => { ... }; */
 
 app.get('/', (req, res) => {
     res.status(201).send({ msg: "Hello world!"});
