@@ -59,7 +59,8 @@ app.get('/api/user', async (req, res) => {
 
 // create user to the database with validation middleware
 app.post('/api/user', validateDBUidPhone, async (req, res) => {
-    const userData = req.body;
+
+    const userData = req.body;  
 
     const response = await createMember(userData);
     res.status(201).send(response);

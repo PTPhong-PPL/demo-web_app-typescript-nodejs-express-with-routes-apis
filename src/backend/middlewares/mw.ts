@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction, response } from 'express';
-import { body, validationResult } from 'express-validator';
+import { Request, Response, NextFunction } from 'express';
+import { body, validationResult, matchedData } from 'express-validator';
 
 import { isUidExisted } from '../utils/db.js';
 
@@ -27,8 +27,9 @@ export async function validateDBUidPhone(req: Request, res: Response, next: Next
     const result = validationResult(req);
  
     if (!result.isEmpty()) {
-        res.status(400).send({ error: result.array() });
-    } else {
-        next();
+        return res.status(400).send({ error: result.array() });
     }
+    req.body = matchedData(req);
+    next();
+    
 };

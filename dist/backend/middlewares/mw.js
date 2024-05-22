@@ -1,4 +1,4 @@
-import { body, validationResult } from 'express-validator';
+import { body, validationResult, matchedData } from 'express-validator';
 import { isUidExisted } from '../utils/db.js';
 export function loggingmd(req, res, next) {
     console.log(`${req.method} - ${req.url}`);
@@ -21,10 +21,9 @@ export async function validateDBUidPhone(req, res, next) {
         .run(req);
     const result = validationResult(req);
     if (!result.isEmpty()) {
-        res.status(400).send({ error: result.array() });
+        return res.status(400).send({ error: result.array() });
     }
-    else {
-        next();
-    }
+    req.body = matchedData(req);
+    next();
 }
 ;
