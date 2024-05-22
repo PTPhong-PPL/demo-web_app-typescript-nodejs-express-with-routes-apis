@@ -2,7 +2,7 @@
 import express from 'express';
 import { getMember, getMemberX, getMembers, createMember } from './utils/db.js';
 import { loggingmd } from './middlewares/mw.js';
-import { checkDuplicateUID } from './middlewares/mw.js';
+import { validateDBUidPhone } from './middlewares/mw.js';
 const PORT = 5500;
 const app = express();
 app.use(express.json()); // So express can work with POST json
@@ -33,7 +33,7 @@ app.get('/api/user/:id', async (req, res) => {
     }
     ;
 });
-// get user with ID and Password (multiple params). Example URL: /api/user?id=u001&pass=password1
+// get user with ID and Password (multiple params which called "query"). Example URL: /api/user?id=u001&pass=password1
 app.get('/api/user', async (req, res) => {
     const id = req.query.id;
     const pass = req.query.pass;
@@ -46,20 +46,23 @@ app.get('/api/user', async (req, res) => {
     }
     ;
 });
-// create user to the database
-app.post('/api/user', checkDuplicateUID, async (req, res) => {
+// create user to the database with validation middleware
+app.post('/api/user', validateDBUidPhone, async (req, res) => {
     const userData = req.body;
     const response = await createMember(userData);
     res.status(201).send(response);
 });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // For error catch!
 app.use((err, req, res, next) => {
-    if (err.statusCode) {
-        res.status(err.statusCode).send({ error: err.message });
-    }
-    else {
-        res.status(500).send({ error: 'An unexpected error occurred' });
-    }
+    console.error(err);
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    res.status(statusCode).json({
+        status: 'error',
+        statusCode,
+        message,
+    });
 });
 // Confirm server running!
 app.listen(PORT, () => {

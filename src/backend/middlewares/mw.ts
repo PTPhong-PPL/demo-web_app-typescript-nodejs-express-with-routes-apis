@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import { getMember } from '../utils/db.js';
+import { Request, Response, NextFunction, response } from 'express';
+import { body, validationResult } from 'express-validator';
 
-import { DatabaseDuplicateIDError } from '../entities/errorType.js';
+import { isUidExisted } from '../utils/db.js';
+
 
 export function loggingmd(req: Request, res: Response, next: NextFunction) {
     console.log(`${req.method} - ${req.url}`);
@@ -9,18 +10,25 @@ export function loggingmd(req: Request, res: Response, next: NextFunction) {
 }
 
 // can be used to make sure json sent by people must not be null as well, or else database gonna throw error and crash the server.
-// normal routes probably wont need these as frontend already made sure all data sent were valid.
-export async function checkDuplicateUID(req: Request, res: Response, next: NextFunction) {
-    try {
-        const {id} = req.body;
+export async function validateDBUidPhone(req: Request, res: Response, next: NextFunction) {
+    await body('id')
+    .exists().withMessage('ID is required!')
+    .notEmpty().withMessage('ID can not be empty!')
+    .custom(async (id) => {
+        if (await isUidExisted(id)) {throw new Error()}
+    }).withMessage((id) => {return `${id} is already existed!`})
+    .run(req);
 
-        const result = await getMember(id);
-        if (result.length > 0) {
-            throw new DatabaseDuplicateIDError(`ID: ${id} has already existed!`, 409);
-        } else {
-            next();
-        }
-    } catch (err) {
-        next(err);
+    await body('phone')
+    .exists().withMessage('Phone is required!')
+    .notEmpty().withMessage('Phone can not be empty!')
+    .run(req);
+    
+    const result = validationResult(req);
+ 
+    if (!result.isEmpty()) {
+        res.status(400).send({ error: result.array() });
+    } else {
+        next();
     }
 };

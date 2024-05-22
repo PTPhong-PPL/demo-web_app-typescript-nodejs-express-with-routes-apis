@@ -1,6 +1,4 @@
-import { error } from 'console';
 import mysql from 'mysql2/promise';
-import { DatabaseDuplicateIDError, testerr } from '../entities/errorType.js';
 
 const pool = mysql.createPool({
     host: '127.0.0.1',
@@ -10,19 +8,17 @@ const pool = mysql.createPool({
 });
 
 export async function getMembers() {
-    try {
         const [result] = await pool.query('SELECT * FROM member');
         return result as any[];
-    } catch (error) {
-        // Handle the error appropriately
-        console.error("Error creating member:", error);
-        throw error; // Rethrow the error to propagate it to the caller
-    }
 }
 
 export async function getMember(id:string) {
     const [result] = await pool.query('SELECT * FROM member WHERE UserID=?', [id]);
     return result as any[];
+}
+export async function isUidExisted(id:string) {
+    const [result] = await pool.query('SELECT * FROM member WHERE UserID=?', [id]) as any[];
+    return result.length > 0
 }
 
 export async function getMemberX(id:string, pass:string) {

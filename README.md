@@ -1,14 +1,14 @@
 # demo-web_app-typescript-nodejs-express-with-routes-apis
 
-Demo a webapp made by TypeScript and NodeJS, Express. Also experimenting routes & APIs
-
+Demo a webapp made by TypeScript and NodeJS, Express (-session, -validator). Also experimenting routes & APIs
+        
 Used MySQL as database
 
 <br>
 
 Command to set up environment:
 
->`npm install express express-session mysql2`  
+>`npm install express express-session express-validator mysql2`  
 >`npm install -D typescript ts-node nodemon @types/node @types/express @types/express-session`  
 >
 >`npm init -y`  

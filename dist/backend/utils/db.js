@@ -6,19 +6,16 @@ const pool = mysql.createPool({
     database: 'Milk_Shop',
 });
 export async function getMembers() {
-    try {
-        const [result] = await pool.query('SELECT * FROM member');
-        return result;
-    }
-    catch (error) {
-        // Handle the error appropriately
-        console.error("Error creating member:", error);
-        throw error; // Rethrow the error to propagate it to the caller
-    }
+    const [result] = await pool.query('SELECT * FROM member');
+    return result;
 }
 export async function getMember(id) {
     const [result] = await pool.query('SELECT * FROM member WHERE UserID=?', [id]);
     return result;
+}
+export async function isUidExisted(id) {
+    const [result] = await pool.query('SELECT * FROM member WHERE UserID=?', [id]);
+    return result.length > 0;
 }
 export async function getMemberX(id, pass) {
     const [result] = await pool.query('SELECT * FROM member WHERE UserID=? AND Password=?', [id, pass]);

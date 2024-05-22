@@ -12,3 +12,10 @@ export class testerr extends Error {
         this.name = 'DatabaseError';
     }
 }
+export class testError extends Error {
+    constructor(message, statusCode) {
+        super(message);
+        this.statusCode = statusCode;
+        this.name = 'DatabaseError';
+    }
+}
