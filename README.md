@@ -1,8 +1,10 @@
 # demo-web_app-typescript-nodejs-express-with-routes-apis
 
-Demo a webapp made by TypeScript and NodeJS, Express (-session, -validator). Also experimenting routes & APIs
-        
-Used MySQL as database
+Demo a webapp made by TypeScript and NodeJS, Express (-session, -validator). Also experimenting routes & APIs  
+  
+Used MySQL as database  
+  
+References: https://www.youtube.com/playlist?list=PL_cUvD4qzbkwjmjy-KjbieZ8J9cGwxZpC
 
 <br>
 
