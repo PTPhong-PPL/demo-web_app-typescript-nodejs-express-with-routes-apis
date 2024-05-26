@@ -23,7 +23,7 @@ export async function isUidExisted(id:string) {
 
 export async function getMemberX(id:string, pass:string) {
     const [result] = await pool.query('SELECT * FROM member WHERE UserID=? AND Password=?', [id, pass]);
-    return result as any[];
+    return result;
 }
 
 export async function createMember(userData:any) {
@@ -34,4 +34,10 @@ export async function createMember(userData:any) {
 
     const [newUser] = await pool.query('SELECT * FROM member WHERE UserID=?', [id]);
     return newUser;
+}
+
+export async function getProducts(name: string) {
+    const search = `%${name}%`;
+    const [products] = await pool.query('SELECT * FROM product WHERE Name LIKE ?', [search]);
+    return products;
 }

@@ -28,3 +28,8 @@ export async function createMember(userData) {
     const [newUser] = await pool.query('SELECT * FROM member WHERE UserID=?', [id]);
     return newUser;
 }
+export async function getProducts(name) {
+    const search = `%${name}%`;
+    const [products] = await pool.query('SELECT * FROM product WHERE Name LIKE ?', [search]);
+    return products;
+}

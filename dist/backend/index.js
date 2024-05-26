@@ -2,8 +2,10 @@
 import express from 'express';
 import { getMember, getMemberX, getMembers, createMember } from './utils/db.js';
 import { loggingmd } from './middlewares/mw.js';
-import { validateDBUidPhone } from './middlewares/mw.js';
-const PORT = 5500;
+import { validateDBUidPhone } from './middlewares/validators.js';
+import { productRoutes } from './routes/productRoutes.js';
+import { userRoutes } from './routes/userRoutes.js';
+const PORT = 8080;
 const app = express();
 app.use(express.json()); // So express can work with POST json
 /* app.use(loggingmd);  // Only use when you want to use this mw globally, mean it will run everytime
@@ -12,9 +14,7 @@ app.get('/', (req, res) => {
     res.status(201).send({ msg: "Hello world!" });
 });
 /*
-    the routes are '/api/...' is because this is API testing, in real scenerio, you want to make 2 route version. 1 is '/...' for HTML
-    page endpoints, which also included security middlewares to ensure sessions before rendering HTML page. 2 is '/api/...' for public
-    API use, which has no security middlewares and only return informations.
+    This is API testing
 */
 // get all users
 app.get('/api/users', loggingmd, async (req, res) => {
@@ -52,6 +52,10 @@ app.post('/api/user', validateDBUidPhone, async (req, res) => {
     const response = await createMember(userData);
     res.status(201).send(response);
 });
+// search for products, using routes and endpoint
+app.use('/api/products', productRoutes);
+// login
+app.use('/api/users', userRoutes);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // For error catch!
 app.use((err, req, res, next) => {
