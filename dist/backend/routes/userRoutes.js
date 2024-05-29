@@ -1,15 +1,14 @@
 import { Router } from "express";
-import { getMemberX } from "../utils/db.js";
-// import { checkPSearchString } from "../middlewares/validator.js";
-// import { getProducts } from "../services/dbProducts.js";
+import { UserController } from "../controllers/UserController.js";
 const router = Router();
-/* log in, send id and pass through
-*/
-router.get("/login", async (req, res) => {
-    const id = req.query.id;
-    const pass = req.query.pass;
-    const user = getMemberX(id, pass);
-    res.status(200).send(user);
+const userController = new UserController();
+/**
+ * log in, send id and pass through query param
+ * id=
+ * pass=
+ */
+router.get("/api/users/login", async (req, res) => {
+    await userController.memberLogin(req, res);
 });
 // export router
 export { router as userRoutes };
