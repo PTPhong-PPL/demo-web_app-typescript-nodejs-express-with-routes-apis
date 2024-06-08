@@ -46,6 +46,8 @@ nodemon.json explain:
 <br>  
   
 ### Attention | Chú ý !!!  
+**Chỉ áp dụng đối với những packages/modules 3rd party, những interfaces/types/enums tự viết trong project thì hãy merging trong file như bình thường, không nên tự viết file `.d.ts` cho những cái đó**  
+
 &emsp;Đối với những modules như express-session, cho phép người dùng customize thông qua việc declaration merging - kết hợp/gộp nhiều properties của một interface lại với nhau thông qua việc gọi lại interface đó nhiều lần. Thì cần chú ý làm theo những điều sau nếu không typescript/nodemon/ts-node sẽ lỗi (chạy file javascript compiled bằng node sẽ không gặp vấn đề gì):  
 <br>  
 Lấy ví dụ express-session trong webapp này, mặc định interface SessionData chỉ có:  
