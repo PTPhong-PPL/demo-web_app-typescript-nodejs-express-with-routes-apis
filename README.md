@@ -1,8 +1,11 @@
 # WebApp_V1.0 with typescript, nodejs, express
 
-Demo a webapp made by TypeScript and NodeJS, Express (-session, -validator). Also experimenting APIs - routes - endpoints/controllers, cookies  
+Demo a webapp made by TypeScript and NodeJS, Express (-session, -validator). No frontend yet, only backend.  
+Also experimenting:  
+- APIs - routes - endpoints/controllers  
+- Authentication using express-session, cookies, passport  
 
-Used MySQL as database  
+Using MySQL as database  
 
 API -> routes -> controller logic -> services -> controller response -> client   
 
@@ -17,10 +20,10 @@ https://www.youtube.com/playlist?list=PL_cUvD4qzbkwjmjy-KjbieZ8J9cGwxZpC
 ## Command to set up environment:
 
 Startup/Install commands:  
->`npm install express express-session express-validator cookie-parser mysql2`  
->`npm install -D typescript ts-node nodemon @types/node @types/express @types/express-session @types/cookie-parser`  
+>`npm install express express-session express-validator cookie-parser mysql2 passport passport-local`  
+>`npm install -D typescript ts-node nodemon @types/node @types/express @types/express-session @types/cookie-parser @types/passport @types/passport-local`  
 >  
->If project already came with `package.json` that has all dependencies, run `npm install` to install all required modules conveniently  
+>If the project already came with a `package.json` that has all dependencies, run `npm install` to automatically install all required modules  
 ><br>  
 >`npm init -y`  
 >`tsc --init`  

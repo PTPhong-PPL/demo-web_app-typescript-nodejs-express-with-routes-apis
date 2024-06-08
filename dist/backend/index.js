@@ -2,6 +2,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import passport from 'passport';
 import { getMember, getMemberX, getMembers, createMember } from './utils/db.js';
 import { loggingmd } from './middlewares/mw.js';
 import { validateDBUidPhone } from './middlewares/validators.js';
@@ -13,8 +14,10 @@ app.use(session({
     secret: "testing",
     saveUninitialized: false,
     resave: false,
-    cookie: { maxAge: 60000 * 60 }
-}));
+    cookie: { maxAge: 60000 * 60 } // milliseconds
+})); // run express-session
+app.use(passport.initialize()); // run passport
+app.use(passport.session());
 app.use(express.json()); // So express can work with POST json
 app.use(cookieParser()); // So express can parse cookies
 /**
@@ -91,6 +94,28 @@ app.get("/session/check", async (req, res) => {
     req.session.visited = true;
     return res.status(200).send({ msg: "Checking cookies:" });
 });
+// simple authentication test with express-session
+app.post("/auth", async (req, res) => {
+    const { id, pass } = req.body;
+    if (id !== 1 || pass !== 1) {
+        return res.status(401).send({ msg: "Wrong id or password" });
+    }
+    ;
+    req.session.visited = true;
+    return res.status(200).send({ msg: `visited = ${req.session.visited}` });
+});
+app.get("/auth/check", async (req, res) => {
+    if (!req.session.visited) {
+        return res.status(401).send({ msg: "you havent login!" });
+    }
+    res.status(200).send({ msg: "you have visited!" });
+});
+// test authentication using passport with local auth
+/**
+ * .../auth/login
+ * req.body json { username: "", password: "" }
+ */
+// app.use(userRoutes); đã có bên trên, thêm này vô minh họa
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // For error catch!
 app.use((err, req, res, next) => {

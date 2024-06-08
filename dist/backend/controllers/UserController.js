@@ -12,4 +12,16 @@ export class UserController {
         console.log(user);
         res.status(200).send(user);
     }
+    async authLogin(req, res) {
+        return res.status(200).send({ msg: "ok" });
+    }
+    async authLogout(req, res) {
+        if (!req.user)
+            return res.status(401).send({ msg: "You haven't log in!" });
+        req.logOut((err) => {
+            if (err)
+                return res.status(500).send({ msg: "Internal server error!" });
+            return res.status(200).send({ msg: "Logged out!" });
+        });
+    }
 }
