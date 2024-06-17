@@ -12,9 +12,7 @@ import { validateDBUidPhone } from './middlewares/validators.js';
 import { productRoutes } from './routes/productRoutes.js';
 import { userRoutes } from './routes/userRoutes.js';
 
-import { localPassport } from './auth-strategies/localStrategy.js';
-
-const PORT = 8080;
+const PORT = 9090;
 
 const app = express();
 
@@ -25,8 +23,8 @@ app.use(session({
     cookie: { maxAge: 60000 * 60 } // milliseconds
 })); // run express-session
 
-app.use(passport.initialize()); // run passport
-app.use(passport.session());
+app.use(passport.initialize()); // run passport, không cần thiết với passport phiên bản mới
+app.use(passport.session()); // lưu session trên server, không cần thiết nếu sử dụng JWT hay những cái khác tương tự
 
 app.use(express.json()); // So express can work with POST json
 app.use(cookieParser()); // So express can parse cookies
