@@ -51,4 +51,4 @@ passport.use(
     })
 );
 
-export {passport as localPassport};
+export default passport;

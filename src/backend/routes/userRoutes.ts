@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/UserController.js";
-import { localPassport } from "../auth-strategies/localStrategy.js";
+import passport from "../auth-strategies/localStrategy.js";
+import "../auth-strategies/localStrategy.js";
 
 const router = Router();
 
@@ -16,7 +17,7 @@ router.get("/api/users/login", async (req, res) => {
 })
 
 // testing passport
-router.post("/auth/login", localPassport.authenticate("local"), async (req, res) => {
+router.post("/auth/login", passport.authenticate("local"), async (req, res) => {
     await userController.authLogin(req, res);
 });
 router.get("/auth/login/check", (req, res) => {
