@@ -27,7 +27,7 @@ Startup/Install commands:
 ><br>  
 >`npm init -y`  
 >`tsc --init`  
->`create 'nodemon.json' manually`  
+>`create 'nodemon.json' manually (optional, cũng có thể ghi thẳng câu lệnh trong phần "scripts" của package.json)`  
 
 Commands to use during development:  
 
