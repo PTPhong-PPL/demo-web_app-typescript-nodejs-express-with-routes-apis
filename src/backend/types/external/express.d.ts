@@ -1,10 +1,8 @@
 import "express";
 
-declare global {
-    namespace Express {
-        interface User {
-            id: string;
-            password: string;
-        }
+declare module 'express' {
+    interface User {
+        id: string;
+        password: string;
     }
 }
